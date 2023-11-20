@@ -6,10 +6,9 @@ const center = styled.div`
     justify-content: center;
 `
 
-export const S = {
+export const TH = {
     Container: styled.div`
         height: 100%;
-        padding: 20px;
     `,
     Header: styled(center)`
         height: 10%;

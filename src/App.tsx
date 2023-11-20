@@ -1,15 +1,19 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import { S } from './styles'
+import { MAIN } from './layouts/main'
+import Modal from './modal'
 
 const App = () => {
 
   return (
-    <S.Container>
-      <S.SubContainer>
+    <>
+    <MAIN.Container>
+      <Modal />
+      <MAIN.SubContainer>
         <Outlet />
-      </S.SubContainer>
-    </S.Container>
+      </MAIN.SubContainer>
+    </MAIN.Container>
+    </>
   )
 }
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { S } from './styles'
+import { TH } from './styles'
 import { projectName } from '../../constants/Text/Main'
 import { useNavigate } from 'react-router-dom';
 
@@ -14,12 +14,12 @@ const Index = () => {
   }
 
   return (
-    <S.Container>
-      <S.Header>
+    <TH.Container>
+      <TH.Header>
         <div className='mr-2 text-2xl'>Toy Project</div>
         <div className='text-xs pt-2'>with TS</div>
-      </S.Header>
-      <S.Main>
+      </TH.Header>
+      <TH.Main>
           {projectName.map(x => {
             return (
               <button 
@@ -28,11 +28,11 @@ const Index = () => {
               </button>
             )
           })}
-      </S.Main>
-      <S.Footer>
+      </TH.Main>
+      <TH.Footer>
         <div></div>
-      </S.Footer>
-    </S.Container>
+      </TH.Footer>
+    </TH.Container>
   )
 }
 
