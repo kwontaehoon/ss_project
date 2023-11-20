@@ -15,6 +15,8 @@ export const TH = {
         border: 1px solid black;
         height: 80%;
         padding: 20px;
+        display: flex;
+        flex-direction: column;
     `,
     Footer: styled.div`
         border: 1px solid black;

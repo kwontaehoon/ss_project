@@ -1,12 +1,16 @@
 import React from 'react'
 import Test from './todoList/Test'
+import { modify } from '../store/todoList'
+import { useAtom } from 'jotai'
 
-const index = () => {
+const Index = () => {
+  const [modifyAtom, setModifyAtom] = useAtom(modify);
+
   return (
     <>
-        <Test />
+        {modifyAtom && <Test />}
     </>
   )
 }
 
-export default index
+export default Index
