@@ -2,27 +2,28 @@ import React, { useState } from 'react'
 import { MAIN } from '../../layouts/main'
 import { TH } from './styles'
 import { InputBox } from '../../function/input'
-import { FaList, FaAlignJustify } from 'react-icons/fa';
-import { FaPlus } from 'react-icons/fa6'
+import { FaList, FaAlignJustify, FaTrash } from 'react-icons/fa';
+import { FaPlus, FaPencil } from 'react-icons/fa6'
+import { filterText } from '../../constants/Text/ToDoList';
+import { LookBox } from '../../layouts/todoList/LookBox';
+import { listAtom } from '../../store/todoList';
+import { useAtom } from 'jotai';
+import { FilterDisplay } from './type'
 
 const Index = () => {
 
-  interface FilterDisplay { 
-    filter: boolean; plus: boolean
-  };
-
   const [filterDisplay, setFilterDisplay] = useState<FilterDisplay>({
     filter: false,
-    plus: false
+    plus: false,
+    lookBox: false,
   });
 
-  const filterFunc = () => {
-    setFilterDisplay({...filterDisplay, filter: !filterDisplay.filter});
-  }
-  
-  const content = [
-    '타입스크립트 공부하기', 'fwefew', '블로그 작성하기', '타입스크립트 프로젝트 만들기', '던모 레이드돌기'
-  ]
+  const [content, setContent] = useState<string>(); // add 내용
+  console.log('content: ', content);
+
+  const [list, setList] = useAtom(listAtom);
+  console.log('list: ', list);
+
   return (
     <MAIN.Container>
       <MAIN.SubContainer>
@@ -30,37 +31,49 @@ const Index = () => {
           <div>To Do List</div>
         </TH.Header>
         <TH.Main>
-          <div className='border flex items-center justify-center'>
-            <InputBox width={250} height={40} mh={20} />
-            <div className='ml-5 border p-2 rounded-full'>
-              <FaPlus />
+          <div className='flex items-center justify-center'>
+            <InputBox width={300} height={40} mh={20} setContent={setContent} />
+            <div className='ml-5 border p-2 rounded-full cursor-pointer bg-lime-200'>
+              <FaPlus onClick={()=>setList([...list, {id: 2, title: content }])} />
             </div>
           </div>
 
-          <div className='border flex text-sm'
+          <div className='flex text-sm my-2 relative border-b py-1'
             onMouseEnter={()=>setFilterDisplay({...filterDisplay, plus: true})}
             onMouseLeave={()=>setFilterDisplay({...filterDisplay, plus: false})}>
-            <div className='flex-1 border flex items-center'>
-              <FaList/>
-              <div className='mx-1'>리스트</div>
-              {filterDisplay.plus && <FaPlus className='cursor-pointer' />}
+            {filterDisplay.lookBox && <LookBox top={36} bottom={0} filterDisplay={filterDisplay} setFilterDisplay={setFilterDisplay}/>}
+            <div className='flex items-center'>
+              <div className='flex items-center p-1 rounded hover:bg-lime-200 cursor-pointer'>
+                <FaList/>
+                <div className='mx-1'>리스트</div>
+              </div>
+              {filterDisplay.plus && <FaPlus className='cursor-pointer ml-1' 
+                onClick={()=>setFilterDisplay({...filterDisplay, lookBox: !filterDisplay.lookBox})} />}
             </div>
             <div className='flex-1 flex items-center justify-end'>
-              <FaAlignJustify className='cursor-pointer' onClick={filterFunc}>필터</FaAlignJustify>
+              <FaAlignJustify className='cursor-pointer' 
+                onClick={()=>setFilterDisplay({...filterDisplay, filter: !filterDisplay.filter})}>필터
+              </FaAlignJustify>
             </div>
           </div>
 
-          <div className={'py-2' + (filterDisplay.filter ? ' block' : ' hidden')}>오늘할 일</div>
-
+          <div className='flex mb-2'>
+            {filterText.map(x => {
+              return(
+                <div key={x.id} className={'px-4 py-2 mr-2 text-xs border rounded-lg cursor-pointer hover:bg-lime-200' + (filterDisplay.filter ? ' block' : ' hidden')}>{x.title}</div>
+              )
+            })}
+          </div>
+          
           <div className='py-2 overflow-y-scroll h-full flex-1'>
-            {content.map((x, index) => {
+            {list.map(x => {
               return (
-                <div className='flex items-center px-5 h-20 mb-4 border bg-gray-200 rounded-lg'>
-                  <div className='rounded-sm w-4 h-4 bg-orange-600 mr-2'></div>
-                  <div className='bg-slate-100 border'>{x}</div>
+                <div className='flex items-center px-5 h-20 mb-4 border rounded-lg'>
+                  <div className='rounded-sm w-4 h-4 bg-lime-200 mr-2'></div>
+                  <div>{x.title}</div>
                   <div className='flex justify-end flex-1'>
-                    <div className='rounded-sm w-4 h-4 border mr-2'></div>
-                    <div className='rounded-sm w-4 h-4 border'></div>
+                    <FaPencil className='rounded-sm mr-4 cursor-pointer' />
+                    <FaTrash className='rounded-sm cursor-pointer' />
                   </div>
                 </div>
               )
@@ -68,7 +81,7 @@ const Index = () => {
           </div>
         </TH.Main>
         <TH.Footer>
-
+            footer
         </TH.Footer>
       </MAIN.SubContainer>
     </MAIN.Container>

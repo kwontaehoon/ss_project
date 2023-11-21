@@ -1,14 +1,14 @@
 import React from 'react'
 import Test from './todoList/Test'
-import { modify } from '../store/todoList'
+import { modifyAtom } from '../store/todoList'
 import { useAtom } from 'jotai'
 
 const Index = () => {
-  const [modifyAtom, setModifyAtom] = useAtom(modify);
+  const [modify, setModify] = useAtom(modifyAtom);
 
   return (
     <>
-        {modifyAtom && <Test />}
+        {modify && <Test />}
     </>
   )
 }

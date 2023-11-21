@@ -5,6 +5,7 @@ interface InputBoxProps {
   width: number;
   height: number;
   mh: number;
+  setContent: (v: string) => void;
 }
 
 const Input = styled.input<{ width: number, height: number, mh: number }>`
@@ -16,6 +17,10 @@ const Input = styled.input<{ width: number, height: number, mh: number }>`
     padding: 0px 20px;
 `
 
-export const InputBox:React.FC<InputBoxProps> = ({width, height, mh}) => {
-  return <Input width={width} height={height} mh={mh} />
+export const InputBox:React.FC<InputBoxProps> = ({width, height, mh, setContent}) => {
+  return <Input 
+          width={width} 
+          height={height} 
+          mh={mh} 
+          onChange={(e)=>setContent(e.target.value)}/>
 }

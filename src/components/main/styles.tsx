@@ -27,7 +27,7 @@ export const TH = {
             display: flex;
             justify-content: center;
             border-radius: 5px;
-            background-color: aquamarine;
+            background-color: rgb(217 249 157);
             padding: 10px 0px;
         }
     `,

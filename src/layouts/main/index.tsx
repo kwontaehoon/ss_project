@@ -6,11 +6,12 @@ export const MAIN = {
       display: flex;
       align-items: center;
       justify-content: center;
+      background-color: #F5F5F5;
     `,
     SubContainer: styled.div`
       width: 520px;
       height: 80%;
-      background-color: #F5F5F5;
+      background-color: white;
       border-radius: 15px;
       padding: 20px;
     `
