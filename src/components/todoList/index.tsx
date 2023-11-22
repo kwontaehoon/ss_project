@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { MAIN } from '../../layouts/main'
 import { TH } from './styles'
 import { InputBox } from '../../function/input'
@@ -9,6 +9,7 @@ import { LookBox } from '../../layouts/todoList/LookBox';
 import { listAtom } from '../../store/todoList';
 import { useAtom } from 'jotai';
 import { FilterDisplay } from './type'
+import { LocalStorage } from '../../function/localStorage';
 
 const Index = () => {
 
@@ -19,10 +20,13 @@ const Index = () => {
   });
 
   const [content, setContent] = useState<string>(); // add 내용
-  console.log('content: ', content);
 
   const [list, setList] = useAtom(listAtom);
   console.log('list: ', list);
+
+  useEffect(()=>{
+    // setList(JSON.parse(localStorage.getItem('list')));
+  }, [list]);
 
   return (
     <MAIN.Container>
@@ -34,7 +38,10 @@ const Index = () => {
           <div className='flex items-center justify-center'>
             <InputBox width={300} height={40} mh={20} setContent={setContent} />
             <div className='ml-5 border p-2 rounded-full cursor-pointer bg-lime-200'>
-              <FaPlus onClick={()=>setList([...list, {id: 2, title: content }])} />
+              <FaPlus onClick={()=>{
+                setList([...list, {id: 2, title: content }]);
+                LocalStorage(list);
+                }} />
             </div>
           </div>
 
