@@ -1,14 +1,16 @@
 import React from 'react'
 import Test from './todoList/Test'
-import { modifyAtom } from '../store/todoList'
+import { textModalAtom } from '../store/todoList'
 import { useAtom } from 'jotai'
+import { TextModal } from './todoList/TextModal'
 
 const Index = () => {
-  const [modify, setModify] = useAtom(modifyAtom);
+  const [textModal, setListModify] = useAtom(textModalAtom);
 
   return (
     <>
-        {modify && <Test />}
+        {textModal.open && < TextModal /> }
+
     </>
   )
 }

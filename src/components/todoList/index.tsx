@@ -6,10 +6,10 @@ import { FaList, FaAlignJustify, FaTrash } from 'react-icons/fa';
 import { FaPlus, FaPencil } from 'react-icons/fa6'
 import { filterText } from '../../constants/Text/ToDoList';
 import { LookBox } from '../../layouts/todoList/LookBox';
-import { listAtom } from '../../store/todoList';
-import { useAtom } from 'jotai';
 import { FilterDisplay } from './type'
 import { LocalStorage } from '../../function/localStorage';
+import { useAtom } from 'jotai';
+import { listAtom, textModalAtom } from '../../store/todoList';
 
 const Index = () => {
 
@@ -22,11 +22,11 @@ const Index = () => {
   const [content, setContent] = useState<string>(); // add 내용
 
   const [list, setList] = useAtom(listAtom);
-  console.log('list: ', list);
+  const [textModal, setTextModal] = useAtom(textModalAtom);
 
   useEffect(()=>{
-    // setList(JSON.parse(localStorage.getItem('list')));
-  }, [list]);
+    setList(JSON.parse(localStorage.getItem('list')));
+  }, []);
 
   return (
     <MAIN.Container>
@@ -38,10 +38,7 @@ const Index = () => {
           <div className='flex items-center justify-center'>
             <InputBox width={300} height={40} mh={20} setContent={setContent} />
             <div className='ml-5 border p-2 rounded-full cursor-pointer bg-lime-200'>
-              <FaPlus onClick={()=>{
-                setList([...list, {id: 2, title: content }]);
-                LocalStorage(list);
-                }} />
+              <FaPlus onClick={()=>LocalStorage(content, setList)} />
             </div>
           </div>
 
@@ -73,14 +70,14 @@ const Index = () => {
           </div>
           
           <div className='py-2 overflow-y-scroll h-full flex-1'>
-            {list.map(x => {
+            {list?.map(x => {
               return (
                 <div className='flex items-center px-5 h-20 mb-4 border rounded-lg'>
                   <div className='rounded-sm w-4 h-4 bg-lime-200 mr-2'></div>
                   <div>{x.title}</div>
                   <div className='flex justify-end flex-1'>
                     <FaPencil className='rounded-sm mr-4 cursor-pointer' />
-                    <FaTrash className='rounded-sm cursor-pointer' />
+                    <FaTrash className='rounded-sm cursor-pointer' onClick={()=>setTextModal({open: true, nextFunc: ()=>{}})} />
                   </div>
                 </div>
               )

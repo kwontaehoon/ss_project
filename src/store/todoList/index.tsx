@@ -5,9 +5,14 @@ interface ListItem {
     title: string | number | null;
 }
 
-export const listAtom = atom<ListItem[]>([
-    {id: 1, title: 111},
-    {id: 2, title: 222}
-]);
+interface ListCRUD {
+    open: boolean,
+    nextFunc: any
+}
 
-export const modifyAtom = atom(false);
+export const listAtom = atom<ListItem[]>([]);
+
+export const textModalAtom = atom<ListCRUD>({
+    open: false,
+    nextFunc: () => {}
+});

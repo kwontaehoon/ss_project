@@ -13,10 +13,9 @@ export const router = createBrowserRouter([
         element: <App />,
         children: [
             { index: true, element: <Main /> },
-            { path: "/mypage", element: <MyPage />}
-        ] 
+            { path: "/mypage", element: <MyPage /> },
+            { path: "To_Do_List", element: <ToDoList /> },
+        ]
     },
-    {
-        path: "To_Do_List", element: <ToDoList />
-    }
+    
 ])
