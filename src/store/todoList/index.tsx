@@ -7,12 +7,20 @@ interface ListItem {
 
 interface ListCRUD {
     open: boolean,
-    nextFunc: any
+    type: string,
+    listData?: ListItem, 
+    mainText?: string,
+    buttonText: string,
+    nextFunc: any,
 }
 
 export const listAtom = atom<ListItem[]>([]);
 
-export const textModalAtom = atom<ListCRUD>({
+export const listCRUDModalAtom = atom<ListCRUD>({
     open: false,
+    type: '',
+    listData: {id: 0, title: ""},
+    mainText: '',
+    buttonText: '',
     nextFunc: () => {}
 });

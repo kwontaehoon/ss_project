@@ -7,9 +7,9 @@ import { FaPlus, FaPencil } from 'react-icons/fa6'
 import { filterText } from '../../constants/Text/ToDoList';
 import { LookBox } from '../../layouts/todoList/LookBox';
 import { FilterDisplay } from './type'
-import { LocalStorage } from '../../function/localStorage';
+import { LocalStorageCreate, LocalStorageDelete } from '../../function/localStorage';
 import { useAtom } from 'jotai';
-import { listAtom, textModalAtom } from '../../store/todoList';
+import { listAtom, listCRUDModalAtom } from '../../store/todoList';
 
 const Index = () => {
 
@@ -22,7 +22,7 @@ const Index = () => {
   const [content, setContent] = useState<string>(); // add 내용
 
   const [list, setList] = useAtom(listAtom);
-  const [textModal, setTextModal] = useAtom(textModalAtom);
+  const [listCRUDModal, setListCRUDModal] = useAtom(listCRUDModalAtom);
 
   useEffect(()=>{
     setList(JSON.parse(localStorage.getItem('list')));
@@ -36,9 +36,9 @@ const Index = () => {
         </TH.Header>
         <TH.Main>
           <div className='flex items-center justify-center'>
-            <InputBox width={300} height={40} mh={20} setContent={setContent} />
+            <InputBox width={"300px"} height={40} mh={20} setContent={setContent} />
             <div className='ml-5 border p-2 rounded-full cursor-pointer bg-lime-200'>
-              <FaPlus onClick={()=>LocalStorage(content, setList)} />
+              <FaPlus onClick={()=>LocalStorageCreate(content, setList)} />
             </div>
           </div>
 
@@ -70,14 +70,16 @@ const Index = () => {
           </div>
           
           <div className='py-2 overflow-y-scroll h-full flex-1'>
-            {list?.map(x => {
+            {list?.map((x, index) => {
               return (
                 <div className='flex items-center px-5 h-20 mb-4 border rounded-lg'>
                   <div className='rounded-sm w-4 h-4 bg-lime-200 mr-2'></div>
                   <div>{x.title}</div>
                   <div className='flex justify-end flex-1'>
-                    <FaPencil className='rounded-sm mr-4 cursor-pointer' />
-                    <FaTrash className='rounded-sm cursor-pointer' onClick={()=>setTextModal({open: true, nextFunc: ()=>{}})} />
+                    <FaPencil className='rounded-sm mr-4 cursor-pointer'
+                      onClick={()=>setListCRUDModal({open: true, type: "update", listData: x, buttonText: "삭제하기", nextFunc: ()=>LocalStorageDelete(index, setList)})}/>
+                    <FaTrash className='rounded-sm cursor-pointer' 
+                      onClick={()=>setListCRUDModal({open: true, type: "delete", mainText: "정말로 삭제하시겠습니까?", buttonText: "삭제하기", nextFunc: ()=>LocalStorageDelete(index, setList)})} />
                   </div>
                 </div>
               )
