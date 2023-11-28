@@ -8,10 +8,11 @@ interface ListItem {
 interface ListCRUD {
     open: boolean,
     type: string,
+    index?: number;
     listData?: ListItem, 
     mainText?: string,
     buttonText: string,
-    nextFunc: any,
+    nextFunc?: any,
 }
 
 export const listAtom = atom<ListItem[]>([]);

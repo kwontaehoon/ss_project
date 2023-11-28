@@ -77,9 +77,9 @@ const Index = () => {
                   <div>{x.title}</div>
                   <div className='flex justify-end flex-1'>
                     <FaPencil className='rounded-sm mr-4 cursor-pointer'
-                      onClick={()=>setListCRUDModal({open: true, type: "update", listData: x, buttonText: "삭제하기", nextFunc: ()=>LocalStorageDelete(index, setList)})}/>
+                      onClick={()=>setListCRUDModal({open: true, index: index, type: "update", listData: x, buttonText: "수정하기", nextFunc: setList})}/>
                     <FaTrash className='rounded-sm cursor-pointer' 
-                      onClick={()=>setListCRUDModal({open: true, type: "delete", mainText: "정말로 삭제하시겠습니까?", buttonText: "삭제하기", nextFunc: ()=>LocalStorageDelete(index, setList)})} />
+                      onClick={()=>setListCRUDModal({open: true, type: "delete", listData: x, mainText: "정말로 삭제하시겠습니까?", buttonText: "삭제하기", nextFunc: ()=>LocalStorageDelete(index, setList)})} />
                   </div>
                 </div>
               )
