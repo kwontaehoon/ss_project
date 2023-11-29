@@ -3,3 +3,8 @@ export interface FilterDisplay {
     plus: boolean,
     lookBox: boolean
   };
+
+export interface LookList {
+  id: number,
+  title: string | number;
+}

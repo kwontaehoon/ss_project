@@ -5,7 +5,7 @@ export const filterText = [
 ]
 
 export const lookBoxText = [
-    {id: 1, title: '표'},
+    {id: 1, title: '리스트'},
     {id: 2, title: '보드'},
     {id: 3, title: '캘린더'}
 ]

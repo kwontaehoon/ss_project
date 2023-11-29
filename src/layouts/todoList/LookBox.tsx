@@ -3,13 +3,6 @@ import styled from 'styled-components'
 import { FaList, FaRegClipboard, FaCalendarAlt, FaRegTimesCircle } from 'react-icons/fa'
 import { lookBoxText } from '../../constants/Text/ToDoList'
 
-export interface LookBoxProps {
-    top: number;
-    bottom: number;
-    filterDisplay: object;
-    setFilterDisplay: (v: object | null) => void;
-};
-
 export const Container = styled.div<{ top: number, bottom: number }>`
     position: absolute;
     top: ${(props) => props.top}px;
@@ -18,7 +11,7 @@ export const Container = styled.div<{ top: number, bottom: number }>`
     background-color: white;
     border: 1px solid #E6E6E6;    
 `
-export const Box = styled.div`
+export const Box = styled.div<{ bg: boolean }>`
     border: 1px solid #E6E6E6;
     cursor: pointer;
     margin: 0px 4px;
@@ -30,10 +23,7 @@ export const Box = styled.div`
     align-items: center;
     width: 32px;
     border-radius: 8px;
-
-    &:hover {
-        background-color: rgb(217 249 157);
-    }
+    background-color: ${(props) => props.bg ? 'rgb(217 249 157)' : 'white'};
 `
 export const CompleteBox = styled.div`
     width: 100%;

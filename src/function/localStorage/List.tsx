@@ -1,6 +1,6 @@
 import { SetStateAction } from "react";
 
-export const LocalStorageCreate = (newTitle:string, setProps:React.Dispatch<SetStateAction<any[]>>) => {
+export const ListCreate = (newTitle:string, setProps:React.Dispatch<SetStateAction<any[]>>) => {
     let newList = [];
     const currentList = JSON.parse(localStorage.getItem('list'));
     if(!currentList){
@@ -10,22 +10,19 @@ export const LocalStorageCreate = (newTitle:string, setProps:React.Dispatch<SetS
     }
     localStorage.setItem('list', JSON.stringify(newList));
     setProps(newList);
-
 }
 
-export const LocalStorageDelete = (listIndex:number, setProps:React.Dispatch<SetStateAction<any[]>>) => {
+export const ListDelete = (listIndex:number, setProps:React.Dispatch<SetStateAction<any[]>>) => {
     const currentList = JSON.parse(localStorage.getItem('list'));
     const newList = currentList.filter((x:string, index:number) => index !== listIndex);
     localStorage.setItem('list', JSON.stringify(newList));
     setProps(newList);
 }
 
-export const LocalStorageUpdate = (listIndex:number, setProps:React.Dispatch<SetStateAction<any[]>>, content: string | number) => {
-    console.log('content: ', content);
+export const ListUpdate = (listIndex:number, setProps:React.Dispatch<SetStateAction<any[]>>, content: string | number) => {
     const currentList = JSON.parse(localStorage.getItem('list'));
-    console.log('currentList: ', currentList);
-    currentList[listIndex] = {id: currentList[listIndex].id, title: content}
     const newList = currentList;
+    currentList[listIndex] = {id: currentList[listIndex].id, title: content}
     localStorage.setItem('list', JSON.stringify(newList));
     setProps(newList);
 }

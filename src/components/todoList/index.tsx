@@ -5,11 +5,12 @@ import { InputBox } from '../../function/input'
 import { FaList, FaAlignJustify, FaTrash } from 'react-icons/fa';
 import { FaPlus, FaPencil } from 'react-icons/fa6'
 import { filterText } from '../../constants/Text/ToDoList';
-import { LookBox } from '../../layouts/todoList/LookBox';
+import { LookBox } from './lookBox';
 import { FilterDisplay } from './type'
-import { LocalStorageCreate, LocalStorageDelete } from '../../function/localStorage';
+import { ListCreate, ListDelete } from '../../function/localStorage/List';
 import { useAtom } from 'jotai';
 import { listAtom, listCRUDModalAtom } from '../../store/todoList';
+import { LookList } from './type';
 
 const Index = () => {
 
@@ -22,10 +23,12 @@ const Index = () => {
   const [content, setContent] = useState<string>(); // add 내용
 
   const [list, setList] = useAtom(listAtom);
+  const [lookList, setLookList] = useState<object[]>();
   const [listCRUDModal, setListCRUDModal] = useAtom(listCRUDModalAtom);
 
   useEffect(()=>{
     setList(JSON.parse(localStorage.getItem('list')));
+    setLookList(JSON.parse(localStorage.getItem('lookList')));
   }, []);
 
   return (
@@ -38,19 +41,20 @@ const Index = () => {
           <div className='flex items-center justify-center'>
             <InputBox width={"300px"} height={40} mh={20} setContent={setContent} />
             <div className='ml-5 border p-2 rounded-full cursor-pointer bg-lime-200'>
-              <FaPlus onClick={()=>LocalStorageCreate(content, setList)} />
+              <FaPlus onClick={()=>ListCreate(content, setList)} />
             </div>
           </div>
 
-          <div className='flex text-sm my-2 relative border-b py-1'
+          <div className='flex text-sm py-2 relative border-b'
             onMouseEnter={()=>setFilterDisplay({...filterDisplay, plus: true})}
             onMouseLeave={()=>setFilterDisplay({...filterDisplay, plus: false})}>
             {filterDisplay.lookBox && <LookBox top={36} bottom={0} filterDisplay={filterDisplay} setFilterDisplay={setFilterDisplay}/>}
             <div className='flex items-center'>
-              <div className='flex items-center p-1 rounded hover:bg-lime-200 cursor-pointer'>
-                <FaList/>
-                <div className='mx-1'>리스트</div>
-              </div>
+              {lookList && <div className='flex items-center rounded cursor-pointer'>
+                {lookList.map((x:LookList)=>{
+                  return <div key={x.id} className='px-1 py-1 border-b-2 border-orange-400'>{x.title}</div>
+                })}
+              </div>}
               {filterDisplay.plus && <FaPlus className='cursor-pointer ml-1' 
                 onClick={()=>setFilterDisplay({...filterDisplay, lookBox: !filterDisplay.lookBox})} />}
             </div>
@@ -79,7 +83,7 @@ const Index = () => {
                     <FaPencil className='rounded-sm mr-4 cursor-pointer'
                       onClick={()=>setListCRUDModal({open: true, index: index, type: "update", listData: x, buttonText: "수정하기", nextFunc: setList})}/>
                     <FaTrash className='rounded-sm cursor-pointer' 
-                      onClick={()=>setListCRUDModal({open: true, type: "delete", listData: x, mainText: "정말로 삭제하시겠습니까?", buttonText: "삭제하기", nextFunc: ()=>LocalStorageDelete(index, setList)})} />
+                      onClick={()=>setListCRUDModal({open: true, type: "delete", listData: x, mainText: "정말로 삭제하시겠습니까?", buttonText: "삭제하기", nextFunc: ()=>ListDelete(index, setList)})} />
                   </div>
                 </div>
               )

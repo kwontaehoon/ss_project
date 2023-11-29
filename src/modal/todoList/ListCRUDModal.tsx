@@ -4,7 +4,7 @@ import { MODAL, MODALSUB } from '../../layouts/modal'
 import { useAtom } from 'jotai'
 import { listCRUDModalAtom } from '../../store/todoList'
 import { InputBox } from '../../function/input'
-import { LocalStorageUpdate } from '../../function/localStorage'
+import { ListUpdate } from '../../function/localStorage/List'
 
 export const ListCRUDModal = () => {
 
@@ -24,7 +24,7 @@ export const ListCRUDModal = () => {
           <div className='flex-1 border flex items-center justify-center ml-1 rounded cursor-pointer bg-lime-200'
             onClick={() => {
               if(listCRUDModal.type == "update"){
-                LocalStorageUpdate(listCRUDModal.index, listCRUDModal.nextFunc, content);
+                ListUpdate(listCRUDModal.index, listCRUDModal.nextFunc, content);
               }else{
                 listCRUDModal.nextFunc();
               }
