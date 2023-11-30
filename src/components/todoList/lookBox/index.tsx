@@ -5,7 +5,7 @@ import { Container, Box, CompleteBox } from '../../../layouts/todoList/LookBox'
 import { LookBoxProps } from './type'
 import { lookListCreate } from '../../../function/localStorage/LookList'
 
-export const LookBox:React.FC<LookBoxProps> = ({top, bottom, filterDisplay, setFilterDisplay}) => {
+export const LookBox:React.FC<LookBoxProps> = ({top, bottom, filterDisplay, setFilterDisplay, lookList, setLookList}) => {
 
     const [listSelect, setListSelect] = useState(Array.from({length: 3}, () => false));
 
@@ -40,6 +40,11 @@ export const LookBox:React.FC<LookBoxProps> = ({top, bottom, filterDisplay, setF
         </div>
         <CompleteBox onClick={()=>{
             lookListCreate(listSelect);
+            if(!lookList){
+                setLookList([{id: 1, title: lookBoxText[listSelect.findIndex(x=>x)].title}]);
+            }else{
+                setLookList(Object.assign([...lookList, {id: lookList.length, title: lookBoxText[listSelect.findIndex(x=>x)].title}]));
+            }
             close();
             }}>완료</CompleteBox>
     </Container>

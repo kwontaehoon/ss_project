@@ -24,6 +24,7 @@ const Index = () => {
 
   const [list, setList] = useAtom(listAtom);
   const [lookList, setLookList] = useState<object[]>();
+  const [lookListBb, setLookListBb] = useState<Boolean[]>([true, ...Array(lookList?.length).fill(false)]);
   const [listCRUDModal, setListCRUDModal] = useAtom(listCRUDModalAtom);
 
   useEffect(()=>{
@@ -45,27 +46,33 @@ const Index = () => {
             </div>
           </div>
 
-          <div className='flex text-sm py-2 relative border-b'
+          <div className={'flex text-xs relative' + (lookList ? 'py-0' : 'py-2')}
             onMouseEnter={()=>setFilterDisplay({...filterDisplay, plus: true})}
             onMouseLeave={()=>setFilterDisplay({...filterDisplay, plus: false})}>
-            {filterDisplay.lookBox && <LookBox top={36} bottom={0} filterDisplay={filterDisplay} setFilterDisplay={setFilterDisplay}/>}
+            {filterDisplay.lookBox && <LookBox top={36} bottom={0} filterDisplay={filterDisplay} setFilterDisplay={setFilterDisplay} lookList={lookList} setLookList={setLookList}/>}
             <div className='flex items-center'>
               {lookList && <div className='flex items-center rounded cursor-pointer'>
-                {lookList.map((x:LookList)=>{
-                  return <div key={x.id} className='px-1 py-1 border-b-2 border-orange-400'>{x.title}</div>
+                {lookList.map((x:LookList, index)=>{
+                  return <div key={x.id} className={'px-1 py-1 border-b-4' + (lookListBb[index] ? ' border-lime-200' : ' border-gray-100')}
+                            onClick={()=>{
+                              const array = Array(lookList?.length).fill(false);
+                              array[index] = true;
+                              setLookListBb(array);
+                            }}>{x.title}</div>
                 })}
               </div>}
               {filterDisplay.plus && <FaPlus className='cursor-pointer ml-1' 
                 onClick={()=>setFilterDisplay({...filterDisplay, lookBox: !filterDisplay.lookBox})} />}
             </div>
             <div className='flex-1 flex items-center justify-end'>
+              <div className='mr-2 cursor-pointer'>편집</div>
               <FaAlignJustify className='cursor-pointer' 
                 onClick={()=>setFilterDisplay({...filterDisplay, filter: !filterDisplay.filter})}>필터
               </FaAlignJustify>
             </div>
           </div>
 
-          <div className='flex mb-2'>
+          <div className='flex my-2'>
             {filterText.map(x => {
               return(
                 <div key={x.id} className={'px-4 py-2 mr-2 text-xs border rounded-lg cursor-pointer hover:bg-lime-200' + (filterDisplay.filter ? ' block' : ' hidden')}>{x.title}</div>
