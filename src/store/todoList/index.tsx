@@ -15,6 +15,12 @@ interface ListCRUD {
     nextFunc?: any,
 }
 
+interface LookList {
+    open: boolean,
+    content?: string | number,
+    buttonContent?: string
+}
+
 export const listAtom = atom<ListItem[]>([]);
 
 export const listCRUDModalAtom = atom<ListCRUD>({
@@ -25,3 +31,13 @@ export const listCRUDModalAtom = atom<ListCRUD>({
     buttonText: '',
     nextFunc: () => {}
 });
+
+export const lookListEditModalAtom = atom<LookList>({
+    open: false,
+})
+
+export const textModalAtom = atom<LookList>({
+    open: false,
+    content: '',
+    buttonContent: ''
+})

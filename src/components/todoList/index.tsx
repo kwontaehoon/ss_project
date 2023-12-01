@@ -9,7 +9,7 @@ import { LookBox } from './lookBox';
 import { FilterDisplay } from './type'
 import { ListCreate, ListDelete } from '../../function/localStorage/List';
 import { useAtom } from 'jotai';
-import { listAtom, listCRUDModalAtom } from '../../store/todoList';
+import { listAtom, listCRUDModalAtom, lookListEditModalAtom } from '../../store/todoList';
 import { LookList } from './type';
 
 const Index = () => {
@@ -26,6 +26,7 @@ const Index = () => {
   const [lookList, setLookList] = useState<object[]>();
   const [lookListBb, setLookListBb] = useState<Boolean[]>([true, ...Array(lookList?.length).fill(false)]);
   const [listCRUDModal, setListCRUDModal] = useAtom(listCRUDModalAtom);
+  const [lookListEditModal, setLookListEditModal] = useAtom(lookListEditModalAtom);
 
   useEffect(()=>{
     setList(JSON.parse(localStorage.getItem('list')));
@@ -46,7 +47,7 @@ const Index = () => {
             </div>
           </div>
 
-          <div className={'flex text-xs relative' + (lookList ? 'py-0' : 'py-2')}
+          <div className={'flex text-xs relative border' + (lookList ? 'py-0' : 'py-2')}
             onMouseEnter={()=>setFilterDisplay({...filterDisplay, plus: true})}
             onMouseLeave={()=>setFilterDisplay({...filterDisplay, plus: false})}>
             {filterDisplay.lookBox && <LookBox top={36} bottom={0} filterDisplay={filterDisplay} setFilterDisplay={setFilterDisplay} lookList={lookList} setLookList={setLookList}/>}
@@ -65,7 +66,7 @@ const Index = () => {
                 onClick={()=>setFilterDisplay({...filterDisplay, lookBox: !filterDisplay.lookBox})} />}
             </div>
             <div className='flex-1 flex items-center justify-end'>
-              <div className='mr-2 cursor-pointer'>편집</div>
+              <div className='mr-2 cursor-pointer' onClick={()=>setLookListEditModal({open: true})}>편집</div>
               <FaAlignJustify className='cursor-pointer' 
                 onClick={()=>setFilterDisplay({...filterDisplay, filter: !filterDisplay.filter})}>필터
               </FaAlignJustify>

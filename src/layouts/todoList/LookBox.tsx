@@ -1,7 +1,4 @@
-import React from 'react'
 import styled from 'styled-components'
-import { FaList, FaRegClipboard, FaCalendarAlt, FaRegTimesCircle } from 'react-icons/fa'
-import { lookBoxText } from '../../constants/Text/ToDoList'
 
 export const Container = styled.div<{ top: number, bottom: number }>`
     position: absolute;

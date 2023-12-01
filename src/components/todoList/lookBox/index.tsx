@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { FaList, FaRegClipboard, FaCalendarAlt, FaRegTimesCircle } from 'react-icons/fa'
-import { lookBoxText } from '../../../constants/Text/ToDoList'
+import { lookListText } from '../../../constants/Text/ToDoList'
 import { Container, Box, CompleteBox } from '../../../layouts/todoList/LookBox'
 import { LookBoxProps } from './type'
 import { lookListCreate } from '../../../function/localStorage/LookList'
@@ -22,7 +22,7 @@ export const LookBox:React.FC<LookBoxProps> = ({top, bottom, filterDisplay, setF
             </div>
         </div>
         <div className='flex'>
-            {lookBoxText.map((x, index) => {
+            {lookListText.map((x, index) => {
                 return(
                     <Box
                         bg={listSelect[index]}
@@ -41,9 +41,9 @@ export const LookBox:React.FC<LookBoxProps> = ({top, bottom, filterDisplay, setF
         <CompleteBox onClick={()=>{
             lookListCreate(listSelect);
             if(!lookList){
-                setLookList([{id: 1, title: lookBoxText[listSelect.findIndex(x=>x)].title}]);
+                setLookList([{id: 1, title: lookListText[listSelect.findIndex(x=>x)].title}]);
             }else{
-                setLookList(Object.assign([...lookList, {id: lookList.length, title: lookBoxText[listSelect.findIndex(x=>x)].title}]));
+                setLookList(Object.assign([...lookList, {id: lookList.length, title: lookListText[listSelect.findIndex(x=>x)].title}]));
             }
             close();
             }}>완료</CompleteBox>
