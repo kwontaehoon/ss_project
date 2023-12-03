@@ -13,6 +13,7 @@ export const TH = {
     Header: styled(center)`
         height: 10%;
         margin-bottom: 40px;
+        border: 1px solid black;
     `,
     Main: styled.div`
         height: 80%;
