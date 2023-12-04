@@ -15,4 +15,6 @@ export const lookListEditText = [
     {id: 2, title: "이름 변경"},
     {id: 3, title: "보기 복제"},
     {id: 4, title: "보기 삭제"}
-]
+];
+
+export const week = ["일", "월", "화", "수", "목", "금", "토"];

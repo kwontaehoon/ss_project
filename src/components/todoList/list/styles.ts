@@ -12,9 +12,7 @@ export const TH = {
         height: 10%;
     `,
     Main: styled.div`
-        border: 1px solid black;
         height: 80%;
-        padding: 20px;
         display: flex;
         flex-direction: column;
     `,
