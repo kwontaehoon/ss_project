@@ -14,6 +14,5 @@ export const MAIN = {
       background-color: white;
       border-radius: 15px;
       padding: 20px;
-      border: 1px solid black;
     `
   };

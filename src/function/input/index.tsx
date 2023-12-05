@@ -24,5 +24,5 @@ export const InputBox:React.FC<InputBoxProps> = ({width, height, mh, placeholder
           height={height} 
           mh={mh}
           placeholder={placeholder}
-          onChange={(e)=>{console.log(e.target.value); setContent(e.target.value)}}/>
+          onChange={(e)=>setContent(e.target.value)}/>
 }

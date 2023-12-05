@@ -3,7 +3,12 @@ import { addMonths, subMonths } from 'date-fns'
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { week } from '../../../constants/Text/ToDoList';
 
-const Index = () => {
+interface CalendarProps {
+  list: object[];
+  setList: React.Dispatch<React.SetStateAction<object[]>>
+}
+
+const Index:React.FC<CalendarProps> = ({list, setList}) => {
 
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
@@ -38,7 +43,7 @@ const Index = () => {
   }
 
   return (
-    <div className='w-full text-xs'>
+    <div className='w-full text-xs overflow-y-scroll'>
       <div className='flex items-center'>
         <div className='font-bold my-4 flex-1'>{currentMonth.getFullYear()}년 {currentMonth.getMonth()+1}월</div>
         <FaAngleLeft className='cursor-pointer' onClick={prevMonth}/>
@@ -59,8 +64,15 @@ const Index = () => {
           let curr = index - curMonthStartDate + 1;
           let prev = prevMonthEndDate - curMonthStartDate + index + 1;
           let next = curr - dateTotalCount;
+
+          console.log('curr: ', curr);
           return (
-            <div key={index} className='border-2 flex h-24' style={{ width: '14.28%' }}>{curMonthStartDate > index ? prev :  dateTotalCount < curr ? next : curr}</div>
+            <div className='border h-24' style={{ width: '14.28%' }}>
+              <div key={index} className='bg-yellow-100'>{curMonthStartDate > index ? prev :  dateTotalCount < curr ? next : curr}</div>
+              <div className='truncate'>자바 공부</div>
+              <div className='truncate'>영어 독해 3지문</div>
+              <div className='truncate'>코딩테스트</div>
+            </div>
           )
         })}
       </div>

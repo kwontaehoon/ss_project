@@ -31,8 +31,9 @@ const Index = () => {
     });
 
     const [list, setList] = useAtom(listAtom);
+    console.log('list: ', list);
     const [content, setContent] = useState<string>(); // add 내용
-    const [lookList, setLookList] = useState<object[]>();
+    const [lookList, setLookList] = useState<LookList[]>();
     const [lookListBb, setLookListBb] = useState<Boolean[]>([true, ...Array(lookList?.length).fill(false)]);
     const [lookListEditModal, setLookListEditModal] = useAtom(lookListEditModalAtom);
 
@@ -55,13 +56,6 @@ const Index = () => {
                                 <FaPlus onClick={() => ListCreate(content, setList)} />
                             </div>
                         </div>
-                        <div className='flex my-2'>
-                            {filterText.map(x => {
-                                return (
-                                    <div key={x.id} className={'px-4 py-2 mr-2 text-xs border rounded-lg cursor-pointer hover:bg-lime-200' + (filterDisplay.filter ? ' block' : ' hidden')}>{x.title}</div>
-                                )
-                            })}
-                        </div>
 
                         <div className={'flex text-xs relative border' + (lookList ? 'py-0' : 'py-2')}
                             onMouseEnter={() => setFilterDisplay({ ...filterDisplay, plus: true })}
@@ -81,6 +75,7 @@ const Index = () => {
                                 {filterDisplay.plus && <FaPlus className='cursor-pointer ml-1'
                                     onClick={() => setFilterDisplay({ ...filterDisplay, lookBox: !filterDisplay.lookBox })} />}
                             </div>
+
                             <div className='flex-1 flex items-center justify-end'>
                                 <div className='mr-2 cursor-pointer' onClick={() => setLookListEditModal({ open: true })}>편집</div>
                                 <FaAlignJustify className='cursor-pointer'
@@ -88,9 +83,16 @@ const Index = () => {
                                 </FaAlignJustify>
                             </div>
                         </div>
+                        <div className='flex my-2'>
+                            {filterText.map(x => {
+                                return (
+                                    <div key={x.id} className={'px-4 py-2 mr-2 text-xs border rounded-lg cursor-pointer hover:bg-lime-200' + (filterDisplay.filter ? ' block' : ' hidden')}>{x.title}</div>
+                                )
+                            })}
+                        </div>
 
-                        <List />
-                        <Calenar />
+                        {lookList && lookList[lookListBb.findIndex(x=>x)].title == '리스트' && <List list={list} setList={setList}/>}
+                        {lookList && lookList[lookListBb.findIndex(x=>x)].title == '캘린더' && <Calenar list={list} setList={setList}/>}
                     </TH.Main>
                     <TH.Footer>
                         footer

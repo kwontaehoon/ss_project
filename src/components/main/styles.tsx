@@ -18,7 +18,6 @@ export const TH = {
     Main: styled.div`
         height: 80%;
         display: flex;
-        align-items: center;
         flex-direction: column;
         font-size: 20px;
 
@@ -34,5 +33,6 @@ export const TH = {
     `,
     Footer: styled(center)`
         height: 10%;
+        border: 1px solid black;
     `
 };

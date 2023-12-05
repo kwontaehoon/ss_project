@@ -4,10 +4,10 @@ import { FaPencil } from 'react-icons/fa6'
 import { ListDelete } from '../../../function/localStorage/List';
 import { useAtom } from 'jotai';
 import { listAtom, listCRUDModalAtom } from '../../../store/todoList';
+import { listProps } from './type';
 
-const Index = () => {
+const Index:React.FC<listProps> = ({list, setList}) => {
 
-  const [list, setList] = useAtom(listAtom);
   const [listCRUDModal, setListCRUDModal] = useAtom(listCRUDModalAtom);
 
   useEffect(() => {
@@ -15,8 +15,8 @@ const Index = () => {
   }, []);
 
   return (
-    <div className='py-2 overflow-y-scroll h-full flex-1'>
-      {list?.map((x, index) => {
+    <div className='py-2 overflow-y-scroll h-full flex-1 text-sm'>
+      {list?.map((x:any, index:number) => {
         return (
           <div className='flex items-center px-5 h-20 mb-4 border rounded-lg'>
             <div className='rounded-sm w-4 h-4 bg-lime-200 mr-2'></div>

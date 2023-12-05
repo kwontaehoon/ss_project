@@ -4,9 +4,9 @@ export const ListCreate = (newTitle:string, setProps:React.Dispatch<SetStateActi
     let newList = [];
     const currentList = JSON.parse(localStorage.getItem('list'));
     if(!currentList){
-        newList = [{id: 1, title: newTitle}];
+        newList = [{id: 1, title: newTitle, date: new Date()}];
     }else{
-        newList = Object.assign([...currentList, {id: !currentList ? 1 :currentList.length+1, title: newTitle}]);
+        newList = Object.assign([...currentList, {id: !currentList ? 1 :currentList.length+1, title: newTitle, date: new Date()}]);
     }
     localStorage.setItem('list', JSON.stringify(newList));
     setProps(newList);
