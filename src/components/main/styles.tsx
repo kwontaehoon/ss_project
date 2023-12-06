@@ -9,16 +9,17 @@ const center = styled.div`
 export const TH = {
     Container: styled.div`
         height: 100%;
+        padding: 40px 20px;
     `,
     Header: styled(center)`
         height: 10%;
-        margin-bottom: 40px;
-        border: 1px solid black;
+        padding-bottom: 40px;
     `,
     Main: styled.div`
         height: 80%;
         display: flex;
         flex-direction: column;
+        align-items: center;
         font-size: 20px;
 
         button {

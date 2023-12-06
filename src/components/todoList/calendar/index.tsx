@@ -1,16 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { addMonths, subMonths } from 'date-fns'
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { week } from '../../../constants/Text/ToDoList';
-
-interface CalendarProps {
-  list: object[];
-  setList: React.Dispatch<React.SetStateAction<object[]>>
-}
+import { CalendarProps } from './type'
 
 const Index:React.FC<CalendarProps> = ({list, setList}) => {
 
-  const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [current, setCurrent] = useState(new Date());
+  const [calendarList, setCalendarList] = useState([]);
 
   const today = {
     year: new Date().getFullYear(), //오늘 연도
@@ -19,33 +16,37 @@ const Index:React.FC<CalendarProps> = ({list, setList}) => {
     day: new Date().getDay(), //오늘 요일
   };
 
+  useEffect(()=>{
+    setCalendarList(list.filter(x=>new Date(x.date).getFullYear() == current.getFullYear() && new Date(x.date).getMonth() == current.getMonth()));
+  }, [list, current]);
+
   const [selectedYear, setSelectedYear] = useState(today.year); // 현재 선택된 연도
   const [selectedMonth, setSelectedMonth] = useState(today.month); // 현재 선택된 달
   const dateTotalCount = new Date(selectedYear, selectedMonth, 0).getDate(); // 선택된 연도, 달의 마지막 날짜
   const curMonthStartDate = new Date(
-    currentMonth.getFullYear(),
-    currentMonth.getMonth(),
+    current.getFullYear(),
+    current.getMonth(),
     1
   ).getDay();
 
   const prevMonthEndDate = new Date(
-    currentMonth.getFullYear(),
-    currentMonth.getMonth(),
+    current.getFullYear(),
+    current.getMonth(),
     0
   ).getDate();
 
   const prevMonth = () => {
-    setCurrentMonth(subMonths(currentMonth, 1));
+    setCurrent(subMonths(current, 1));
   }
 
   const nextMonth = () => {
-    setCurrentMonth(addMonths(currentMonth, 1));
+    setCurrent(addMonths(current, 1));
   }
 
   return (
-    <div className='w-full text-xs overflow-y-scroll'>
+    <div className='w-full text-xs'>
       <div className='flex items-center'>
-        <div className='font-bold my-4 flex-1'>{currentMonth.getFullYear()}년 {currentMonth.getMonth()+1}월</div>
+        <div className='font-bold mb-2 flex-1'>{current.getFullYear()}년 {current.getMonth()+1}월</div>
         <FaAngleLeft className='cursor-pointer' onClick={prevMonth}/>
         <div className='px-2'>오늘</div>
         <FaAngleRight className='cursor-pointer' onClick={nextMonth}/>
@@ -65,13 +66,15 @@ const Index:React.FC<CalendarProps> = ({list, setList}) => {
           let prev = prevMonthEndDate - curMonthStartDate + index + 1;
           let next = curr - dateTotalCount;
 
-          console.log('curr: ', curr);
           return (
             <div className='border h-24' style={{ width: '14.28%' }}>
-              <div key={index} className='bg-yellow-100'>{curMonthStartDate > index ? prev :  dateTotalCount < curr ? next : curr}</div>
-              <div className='truncate'>자바 공부</div>
-              <div className='truncate'>영어 독해 3지문</div>
-              <div className='truncate'>코딩테스트</div>
+              <div key={index} className='bg-lime-200'>{curMonthStartDate > index ? prev :  dateTotalCount < curr ? next : curr}</div>
+              {calendarList.map(y=>{
+                if(index == new Date(y.date).getDate() + curMonthStartDate - 1)
+                return(
+                  <div className='truncate'>{y.title}</div>
+                )
+              })}
             </div>
           )
         })}

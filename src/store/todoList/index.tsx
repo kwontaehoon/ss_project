@@ -3,6 +3,7 @@ import { atom } from 'jotai';
 interface ListItem {
     id: number,
     title: string | number | null;
+    date: Date;
 }
 
 interface ListCRUD {
@@ -16,9 +17,9 @@ interface ListCRUD {
 }
 
 interface LookList {
-    open: boolean,
-    content?: string | number,
-    buttonContent?: string
+    open: boolean;
+    content?: string | number;
+    buttonContent?: string;
 }
 
 export const listAtom = atom<ListItem[]>([]);
@@ -26,7 +27,7 @@ export const listAtom = atom<ListItem[]>([]);
 export const listCRUDModalAtom = atom<ListCRUD>({
     open: false,
     type: '',
-    listData: {id: 0, title: ""},
+    listData: {id: 0, title: "", date: new Date()},
     mainText: '',
     buttonText: '',
     nextFunc: () => {}

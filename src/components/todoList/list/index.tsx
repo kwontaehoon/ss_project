@@ -3,7 +3,7 @@ import { FaTrash } from 'react-icons/fa';
 import { FaPencil } from 'react-icons/fa6'
 import { ListDelete } from '../../../function/localStorage/List';
 import { useAtom } from 'jotai';
-import { listAtom, listCRUDModalAtom } from '../../../store/todoList';
+import { listCRUDModalAtom } from '../../../store/todoList';
 import { listProps } from './type';
 
 const Index:React.FC<listProps> = ({list, setList}) => {
@@ -15,7 +15,7 @@ const Index:React.FC<listProps> = ({list, setList}) => {
   }, []);
 
   return (
-    <div className='py-2 overflow-y-scroll h-full flex-1 text-sm'>
+    <div className='py-2 flex-1 text-sm'>
       {list?.map((x:any, index:number) => {
         return (
           <div className='flex items-center px-5 h-20 mb-4 border rounded-lg'>

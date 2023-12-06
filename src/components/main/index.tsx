@@ -16,7 +16,7 @@ const Index = () => {
   return (
     <TH.Container>
       <TH.Header>
-        <div className='mr-2 text-2xl'>Toy Project</div>
+        <div className='mr-2 text-2xl' style={{fontFamily: ''}}>Toy Project</div>
         <div className='text-xs pt-2'>with TS</div>
       </TH.Header>
       <TH.Main>
