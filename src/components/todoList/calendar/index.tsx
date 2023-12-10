@@ -3,9 +3,11 @@ import { addMonths, subMonths } from 'date-fns'
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { week } from '../../../constants/Text/ToDoList';
 import { CalendarProps } from './type'
+import { useNavigate } from 'react-router-dom';
 
 const Index: React.FC<CalendarProps> = ({ list, setList }) => {
 
+  const navigate = useNavigate();
   const [current, setCurrent] = useState(new Date());
   const [calendarList, setCalendarList] = useState([]);
 
@@ -60,20 +62,20 @@ const Index: React.FC<CalendarProps> = ({ list, setList }) => {
           )
         })}
       </div>
-      <div className='flex flex-wrap'>
+      <div className='flex flex-wrap bg-gray-100'>
         {Array.from({ length: 42 }).map((x, index) => {
           let curr = index - curMonthStartDate + 1;
           let prev = prevMonthEndDate - curMonthStartDate + index + 1;
           let next = curr - dateTotalCount;
 
           return (
-            <div className='bg-gray-100 py-2' style={{ width: '14.28%' }}>
-              <div key={index} className='bg-lime-200 h-4 mx-1 rounded-br-xl rounded-tl-xl pl-1'>{curMonthStartDate > index ? prev : dateTotalCount < curr ? next : curr}</div>
+            <div className='py-2' style={{ width: '14.28%' }}>
+              <div key={index} className='bg-lime-200 h-4 mx-1 rounded-br-xl rounded-tl-xl pl-2'>{curMonthStartDate > index ? prev : dateTotalCount < curr ? next : curr}</div>
               <div className='bg-white m-1 p-1 h-20 rounded-tr-xl rounded-bl-xl'>
                 {calendarList.map(y => {
                   if (index == new Date(y.date).getDate() + curMonthStartDate - 1)
                     return (
-                      <div className='truncate'>{y.title}</div>
+                      <div className='truncate' onClick={()=>navigate(`${y.id}`)}>{y.title}</div>
                     )
                 })}
               </div>

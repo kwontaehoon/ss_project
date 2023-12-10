@@ -17,7 +17,7 @@ export const MAIN = {
       height: 100%;
       background-color: white;
       border-radius: 15px;
-
+      
       @media (max-width: 768px) {
         width: 100%;
       }

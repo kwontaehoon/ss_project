@@ -7,6 +7,7 @@ import App from '../App'
 import Main from '../components/main'
 import ToDoList from '../components/todoList'
 import MyPage from '../components/myPage'
+import TodoListDetails from '../constants/TodoList/TodoListDetails'
 
 export const router = createBrowserRouter([
     {  path: "/",
@@ -14,7 +15,11 @@ export const router = createBrowserRouter([
         children: [
             { index: true, element: <Main /> },
             { path: "/mypage", element: <MyPage /> },
-            { path: "To_Do_List", element: <ToDoList /> },
+            { path: "/to_do_list",
+                children: [
+                    { index: true, element: <ToDoList /> },
+                    { path: ":id", element: <TodoListDetails />}
+                ]},
         ]
     },
     

@@ -9,7 +9,7 @@ const Index = () => {
 
   const pageNavi = (e:string) => {
     if(e == 'To Do List'){
-      navigation('To_Do_List');
+      navigation('to_do_list');
     }
   }
 

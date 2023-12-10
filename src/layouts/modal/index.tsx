@@ -17,9 +17,10 @@ export const MODAL = styled.div`
 `
 export const MODALSUB = styled.div`
     position: absolute;
-    width: 350px;
+    width: 90%;
     padding: 30px;
     background-color: rgb(255, 255, 255);
     border-radius: 20px;
     box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+    font-size: 14px;
 `

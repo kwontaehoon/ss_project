@@ -63,8 +63,7 @@ const Index = () => {
                             {lookList.map((x: LookList, index) => {
                                 return (
                                     <div key={x.id} className={'px-1 py-1 border-b-4 font-bold flex items-center' + (lookListBb[index] ? ' border-lime-200' : ' border-gray-100')}>
-                                        {x.title == "리스트" ? <FaList /> : x.title == "보드" ? <FaRegClipboard /> : <FaCalendarAlt />}
-                                        <div className='ml-1' onClick={() => {
+                                        <div onClick={() => {
                                             const array = Array(lookList?.length).fill(false);
                                             array[index] = true;
                                             setLookListBb(array);
