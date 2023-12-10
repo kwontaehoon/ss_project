@@ -4,7 +4,7 @@ import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { week } from '../../../constants/Text/ToDoList';
 import { CalendarProps } from './type'
 
-const Index:React.FC<CalendarProps> = ({list, setList}) => {
+const Index: React.FC<CalendarProps> = ({ list, setList }) => {
 
   const [current, setCurrent] = useState(new Date());
   const [calendarList, setCalendarList] = useState([]);
@@ -16,8 +16,8 @@ const Index:React.FC<CalendarProps> = ({list, setList}) => {
     day: new Date().getDay(), //오늘 요일
   };
 
-  useEffect(()=>{
-    setCalendarList(list.filter(x=>new Date(x.date).getFullYear() == current.getFullYear() && new Date(x.date).getMonth() == current.getMonth()));
+  useEffect(() => {
+    setCalendarList(list.filter(x => new Date(x.date).getFullYear() == current.getFullYear() && new Date(x.date).getMonth() == current.getMonth()));
   }, [list, current]);
 
   const [selectedYear, setSelectedYear] = useState(today.year); // 현재 선택된 연도
@@ -46,10 +46,10 @@ const Index:React.FC<CalendarProps> = ({list, setList}) => {
   return (
     <div className='w-full text-xs'>
       <div className='flex items-center'>
-        <div className='font-bold mb-2 flex-1'>{current.getFullYear()}년 {current.getMonth()+1}월</div>
-        <FaAngleLeft className='cursor-pointer' onClick={prevMonth}/>
+        <div className='font-bold mb-2 flex-1'>{current.getFullYear()}년 {current.getMonth() + 1}월</div>
+        <FaAngleLeft className='cursor-pointer' onClick={prevMonth} />
         <div className='px-2'>오늘</div>
-        <FaAngleRight className='cursor-pointer' onClick={nextMonth}/>
+        <FaAngleRight className='cursor-pointer' onClick={nextMonth} />
       </div>
       <div className='flex my-1'>
         {week.map((x, index) => {
@@ -67,14 +67,16 @@ const Index:React.FC<CalendarProps> = ({list, setList}) => {
           let next = curr - dateTotalCount;
 
           return (
-            <div className='border h-24' style={{ width: '14.28%' }}>
-              <div key={index} className='bg-lime-200'>{curMonthStartDate > index ? prev :  dateTotalCount < curr ? next : curr}</div>
-              {calendarList.map(y=>{
-                if(index == new Date(y.date).getDate() + curMonthStartDate - 1)
-                return(
-                  <div className='truncate'>{y.title}</div>
-                )
-              })}
+            <div className='bg-gray-100 py-2' style={{ width: '14.28%' }}>
+              <div key={index} className='bg-lime-200 h-4 mx-1 rounded-br-xl rounded-tl-xl pl-1'>{curMonthStartDate > index ? prev : dateTotalCount < curr ? next : curr}</div>
+              <div className='bg-white m-1 p-1 h-20 rounded-tr-xl rounded-bl-xl'>
+                {calendarList.map(y => {
+                  if (index == new Date(y.date).getDate() + curMonthStartDate - 1)
+                    return (
+                      <div className='truncate'>{y.title}</div>
+                    )
+                })}
+              </div>
             </div>
           )
         })}

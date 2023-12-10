@@ -12,14 +12,20 @@ export const TH = {
         padding: 20px;
         border: 1px solid red;
     `,
-    Header: styled(center)`
+    Header: styled.div`
         height: 10%;
-        border: 1px solid blue;
-    `,
+        border-bottom: 1px solid black;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+     `,
     Main: styled.div`
         height: 80%;
         font-size: 20px;
         overflow-y: scroll;
+            &::-webkit-scrollbar {
+                border-radius: 6px;
+            }
 
         button {
             margin: 20px 0px;

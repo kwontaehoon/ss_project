@@ -3,13 +3,13 @@ import List from './list/index'
 import Board from './board'
 import Calenar from './calendar'
 import { TH } from './styles'
-import { FaAlignJustify, FaPlus } from 'react-icons/fa'
+import { FaAlignJustify, FaPlus, FaList, FaCalendarAlt, FaRegClipboard } from 'react-icons/fa'
 import { LookBox } from './lookBox'
 import { useAtom } from 'jotai'
 import { listAtom, lookListEditModalAtom } from '../../store/todoList'
 import { InputBox } from '../../function/input'
 import { ListCreate } from '../../function/localStorage/List'
-import { filterText } from '../../constants/Text/ToDoList'
+import { filterText, today } from '../../constants/Text/ToDoList'
 
 const Index = () => {
 
@@ -42,12 +42,13 @@ const Index = () => {
     return (
         <TH.Container>
             <TH.Header>
-                <div>To Do List</div>
+                <div className='text-xl font-bold pb-1'>To Do List</div>
+                <div className='text-gray-500 text-xs'>{today.year}년 {today.month}월{today.date}일 {today.day()}요일</div>
             </TH.Header>
 
             <TH.Main>
                 <div className='flex items-center justify-center'>
-                    <InputBox width={"300px"} height={40} mh={20} setContent={setContent} />
+                    <InputBox width={"100%"} height={40} mh={20} setContent={setContent} />
                     <div className='ml-5 border p-2 rounded-full cursor-pointer bg-lime-200'>
                         <FaPlus onClick={() => ListCreate(content, setList)} />
                     </div>
@@ -60,12 +61,15 @@ const Index = () => {
                     <div className='flex items-center'>
                         {lookList && <div className='flex items-center rounded cursor-pointer'>
                             {lookList.map((x: LookList, index) => {
-                                return <div key={x.id} className={'px-1 py-1 border-b-4' + (lookListBb[index] ? ' border-lime-200' : ' border-gray-100')}
-                                    onClick={() => {
-                                        const array = Array(lookList?.length).fill(false);
-                                        array[index] = true;
-                                        setLookListBb(array);
-                                    }}>{x.title}</div>
+                                return (
+                                    <div key={x.id} className={'px-1 py-1 border-b-4 font-bold flex items-center' + (lookListBb[index] ? ' border-lime-200' : ' border-gray-100')}>
+                                        {x.title == "리스트" ? <FaList /> : x.title == "보드" ? <FaRegClipboard /> : <FaCalendarAlt />}
+                                        <div className='ml-1' onClick={() => {
+                                            const array = Array(lookList?.length).fill(false);
+                                            array[index] = true;
+                                            setLookListBb(array);
+                                        }}>{x.title}</div>
+                                    </div>)
                             })}
                         </div>}
                         {filterDisplay.plus && <FaPlus className='cursor-pointer ml-1'
