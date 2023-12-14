@@ -20,6 +20,11 @@ interface LookList {
     open: boolean;
     content?: string | number;
     buttonContent?: string;
+    func?: () => void;
+    lookList?: object[];
+    setLookList?: React.Dispatch<React.SetStateAction<object[]>>;
+    lookListBb?: object[];
+    setLookListBb?: React.Dispatch<React.SetStateAction<object[]>>;
 }
 
 export const listAtom = atom<ListItem[]>([]);
@@ -30,15 +35,20 @@ export const listCRUDModalAtom = atom<ListCRUD>({
     listData: {id: 0, title: "", date: new Date()},
     mainText: '',
     buttonText: '',
-    nextFunc: () => {}
+    nextFunc: ()=>{}
 });
 
 export const lookListEditModalAtom = atom<LookList>({
     open: false,
+    lookList: []
 })
 
 export const textModalAtom = atom<LookList>({
     open: false,
     content: '',
-    buttonContent: ''
+    buttonContent: '',
+    func: ()=>{},
+    setLookList: ()=>{},
+    lookListBb: [],
+    setLookListBb: ()=>{}, 
 })

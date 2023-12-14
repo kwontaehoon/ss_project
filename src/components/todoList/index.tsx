@@ -34,6 +34,7 @@ const Index = () => {
     const [lookList, setLookList] = useState<LookList[]>();
     const [lookListBb, setLookListBb] = useState<Boolean[]>([true, ...Array(lookList?.length).fill(false)]);
     const [lookListEditModal, setLookListEditModal] = useAtom(lookListEditModalAtom);
+    console.log("list: ", lookList, lookListBb);
 
     useEffect(() => {
         setLookList(JSON.parse(localStorage.getItem('lookList')));
@@ -76,7 +77,7 @@ const Index = () => {
                     </div>
 
                     <div className='flex-1 flex items-center justify-end'>
-                        <div className='mr-2 cursor-pointer' onClick={() => setLookListEditModal({ open: true })}>편집</div>
+                        <div className='mr-2 cursor-pointer' onClick={()=>setLookListEditModal({ open: true, lookList: lookList, setLookList: setLookList, lookListBb: lookListBb, setLookListBb: setLookListBb })}>편집</div>
                         <FaAlignJustify className='cursor-pointer'
                             onClick={() => setFilterDisplay({ ...filterDisplay, filter: !filterDisplay.filter })}>필터
                         </FaAlignJustify>
@@ -85,7 +86,7 @@ const Index = () => {
                 <div className='flex my-2'>
                     {filterText.map(x => {
                         return (
-                            <div key={x.id} className={'px-4 py-2 mr-2 text-xs border rounded-lg cursor-pointer hover:bg-lime-200' + (filterDisplay.filter ? ' block' : ' hidden')}>{x.title}</div>
+                            <div key={x.id} className={'px-4 py-2 mr-2 text-xs border rounded-lg cursor-pointer hover:bg-lime-200' + (filterDisplay.filter ? ' block' : ' hidden')}>{x?.title}</div>
                         )
                     })}
                 </div>
