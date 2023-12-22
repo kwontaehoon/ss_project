@@ -1,4 +1,4 @@
-export const projectName = [
-    {id: 1, title: 'To Do List'},
-    {id: 2, title: '-'},
+export const sign = [
+    {id: 1, title: '회원'},
+    {id: 2, title: '비회원'},
 ]

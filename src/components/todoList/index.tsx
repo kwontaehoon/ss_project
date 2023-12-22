@@ -10,19 +10,11 @@ import { listAtom, lookListEditModalAtom } from '../../store/todoList'
 import { InputBox } from '../../function/input'
 import { ListCreate } from '../../function/localStorage/List'
 import { filterText, today } from '../../constants/Text/ToDoList'
+import { FilterDisplay, LookList } from './type'
 
 const Index = () => {
 
-    interface FilterDisplay {
-        filter: boolean;
-        plus: boolean,
-        lookBox: boolean
-    };
-
-    interface LookList {
-        id: number,
-        title: string | number;
-    }
+    
     const [filterDisplay, setFilterDisplay] = useState<FilterDisplay>({
         filter: false,
         plus: false,
@@ -34,7 +26,6 @@ const Index = () => {
     const [lookList, setLookList] = useState<LookList[]>();
     const [lookListBb, setLookListBb] = useState<Boolean[]>([true, ...Array(lookList?.length).fill(false)]);
     const [lookListEditModal, setLookListEditModal] = useAtom(lookListEditModalAtom);
-    console.log("list: ", lookList, lookListBb);
 
     useEffect(() => {
         setLookList(JSON.parse(localStorage.getItem('lookList')));

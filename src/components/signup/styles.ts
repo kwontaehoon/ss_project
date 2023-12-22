@@ -13,11 +13,10 @@ export const TH = {
         flex-direction: column;
     `,
     Header: styled(center)`
-        height: 20%;
+
     `,
     Main: styled.div`
         width: 300px;
-        height: 60%;
         align-items: center;
         font-size: 12px;
 
@@ -29,6 +28,6 @@ export const TH = {
         }
     `,
     Footer: styled(center)`
-        height: 20%;
+
     `
 };
