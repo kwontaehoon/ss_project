@@ -30,7 +30,9 @@ const Index = () => {
           <TextField id="outlined-basic" label="password" variant="outlined" />
           <button>로그인</button>
           <div className='flex'>
-            <div className='flex-1 cursor-pointer' onClick={()=>pageNavi("signup")}>회원가입</div>
+            <div className='flex-1'>
+              <span className='cursor-pointer' onClick={()=>pageNavi("signup")}>회원가입</span>
+            </div>
             <div className='cursor-pointer'>아이디 비밀번호 찾기</div>
           </div>
         </div>
