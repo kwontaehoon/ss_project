@@ -2,7 +2,7 @@ import { useQuery, useMutation } from "react-query";
 import { getTest } from "../../service/Test";
 
 const TEST_KEYS = {
-  test: "/test/board"
+  test: "boardTest"
 }
 
 export const useTestQuery = () => {
