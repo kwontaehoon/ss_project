@@ -1,12 +1,12 @@
 import { useQuery, useMutation } from "react-query";
-import { postSignup } from "../../service/Account";
+import { getIdCheck, postSignup } from "../../service/Account";
 
 const ACCOUNT_KEYS = {
-  
+  idCheck: "idCheck"
 }
 
 export const useSignupQuery = () =>
-  useMutation({
+useMutation({
     mutationFn: (params: Object) => {
       console.log("params: ", params);
       return postSignup(params);
@@ -15,3 +15,10 @@ export const useSignupQuery = () =>
       // 성공 시 실행할 로직 추가
     }
   });
+
+  export const useIdCheckQuery = (params:Object) => {
+    return useQuery(ACCOUNT_KEYS.idCheck, async () => {
+      const { data } = await getIdCheck(params);
+      return data;
+  });
+  }

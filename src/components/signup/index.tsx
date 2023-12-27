@@ -1,16 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { TH } from './styles'
 import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import { useTestQuery } from '../../hooks/queries/Test';
-import { useSignupQuery } from '../../hooks/queries/Account';
+import { useIdCheckQuery, useSignupQuery } from '../../hooks/queries/Account';
 import { signupValidation } from '../utill/signup';
 
 const Index = () => {
 
   const navigation = useNavigate();
-  const { data, mutate: signup } = useSignupQuery();
-  console.log("signup data:" , data);
+
 
   const [info, setInfo] = useState({
     userId: '',
@@ -27,7 +26,9 @@ const Index = () => {
     name: false,
     email: false
   });
-  console.log("notFind: ", notFind);
+
+  const { mutate: signup } = useSignupQuery();
+  const { data: idCheck, refetch } = useIdCheckQuery({userId: info.userId});
 
   return (
     <TH.Container>
@@ -41,8 +42,10 @@ const Index = () => {
         <div className='flex flex-col'>
           <TextField id="outlined-basic" size="small" label="아이디" variant="outlined" margin='normal'
             onChange={(e) => setInfo({ ...info, userId: e.target.value })}
-            onFocus={() => setNotFind({ ...notFind, userId: false })} />
+            onFocus={() => setNotFind({ ...notFind, userId: false })}
+            onBlur={()=>refetch()} />
           {notFind.userId && <div className='text-red-500 ml-1'>아이디를 확인해주세요.</div>}
+          {idCheck?.status == "error" && <div className='text-red-500 ml-1'>중복된 아이디입니다.</div>}
 
           <TextField id="outlined-basic" size="small" label="비밀번호" variant="outlined" margin='normal'
             onChange={(e) => setInfo({ ...info, password: e.target.value })}
@@ -64,7 +67,7 @@ const Index = () => {
             onFocus={() => setNotFind({ ...notFind, email: false })} />
           {notFind.email && <div className='text-red-500 ml-1'>이메일을 확인해주세요.</div>}
 
-          <button onClick={() => signupValidation({ info, notFind, setNotFind, signup })}>회원가입</button>
+          <button onClick={() => signupValidation({ info, notFind, setNotFind, signup, idCheck })}>회원가입</button>
           <div className='flex justify-center'>
             <div className='mr-2'>이미 계정이 있습니까?</div>
             <div className='cursor-pointer' onClick={() => navigation("/")}>로그인하기</div>

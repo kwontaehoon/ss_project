@@ -1,17 +1,20 @@
 import { AxiosResponse } from "axios";
-import { UseMutateAsyncFunction, UseMutateFunction } from "react-query";
+import { UseMutateAsyncFunction, UseMutateFunction, UseQueryOptions, UseQueryResult } from "react-query";
 
 type InfoType = Record<"userId" | "password" | "passwordCheck" | "name" | "email", string>;
 type NotFindType = Record<"userId" | "password" | "passwordCheck" | "name" | "email", boolean>;
-
+type IdCheckType = {
+    status?: Number
+}
 interface ValidationType {
     info: InfoType,
     notFind: NotFindType,
     setNotFind: React.Dispatch<React.SetStateAction<NotFindType>>,
-    signup: UseMutateFunction<AxiosResponse<any, any>, unknown, Object, unknown>
+    signup: UseMutateFunction<AxiosResponse<any, any>, unknown, Object, unknown>,
+    idCheck: UseQueryResult<IdCheckType>
 }
 
-export const signupValidation = ({ info, notFind, setNotFind, signup }: ValidationType): void => {
+export const signupValidation = ({ info, notFind, setNotFind, signup, idCheck }: ValidationType): void => {
     const { userId, password, passwordCheck, name, email } = info;
 
     const updateNotFind = (field: keyof NotFindType, value: boolean): void => {
@@ -34,10 +37,8 @@ export const signupValidation = ({ info, notFind, setNotFind, signup }: Validati
         updateNotFind('email', true);
     }
 
-    if(info.password == info.passwordCheck && Object.values(info).every(value => value !== '')){
+    if(idCheck?.status == "success" && info.password == info.passwordCheck && Object.values(info).every(value => value !== '')){
         const { passwordCheck, ...infoWithoutPasswordCheck } = info;
-        signup(infoWithoutPasswordCheck)
+        signup(infoWithoutPasswordCheck);
     };
-
-    
 };
