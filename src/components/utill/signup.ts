@@ -15,6 +15,7 @@ interface ValidationType {
 }
 
 export const signupValidation = ({ info, notFind, setNotFind, signup, idCheck }: ValidationType): void => {
+    
     const { userId, password, passwordCheck, name, email } = info;
 
     const updateNotFind = (field: keyof NotFindType, value: boolean): void => {

@@ -3,7 +3,7 @@ import { TH } from './styles'
 import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import { useTestQuery } from '../../hooks/queries/Test';
-import { useIdCheckQuery, useSignupQuery } from '../../hooks/queries/Account';
+import { useIdCheckQuery, useSignupMutation } from '../../hooks/queries/Account';
 import { signupValidation } from '../utill/signup';
 
 const Index = () => {
@@ -27,7 +27,7 @@ const Index = () => {
     email: false
   });
 
-  const { mutate: signup } = useSignupQuery();
+  const { mutate: signup } = useSignupMutation();
   const { data: idCheck, refetch } = useIdCheckQuery({userId: info.userId});
 
   return (
@@ -43,7 +43,7 @@ const Index = () => {
           <TextField id="outlined-basic" size="small" label="아이디" variant="outlined" margin='normal'
             onChange={(e) => setInfo({ ...info, userId: e.target.value })}
             onFocus={() => setNotFind({ ...notFind, userId: false })}
-            onBlur={()=>refetch()} />
+            onBlur={() => refetch()} />
           {notFind.userId && <div className='text-red-500 ml-1'>아이디를 확인해주세요.</div>}
           {idCheck?.status == "error" && <div className='text-red-500 ml-1'>중복된 아이디입니다.</div>}
 
