@@ -41,7 +41,6 @@ export const useIdCheckQuery = (params: Object) => {
 export const useLoginMutation = () =>
   useMutation({
     mutationFn: (params: Object) => {
-      console.log("params: ", params);
       return postLogin(params);
     },
     onSuccess: () => {

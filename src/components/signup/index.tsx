@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import { useTestQuery } from '../../hooks/queries/Test';
 import { useIdCheckQuery, useSignupMutation } from '../../hooks/queries/Account';
-import { signupValidation } from '../utill/signup';
+import { signupValidation } from '../../utill/signup';
 
 const Index = () => {
 

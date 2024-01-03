@@ -1,11 +1,11 @@
 import React from 'react'
 import { MODAL, MODALSUB } from '../../layouts/modal'
 import { useAtom } from 'jotai'
-import { textModalAtom } from '../../store/todoList';
+import { toDoListTextModalAtom } from '../../store/todoList';
 
-export const TextModal = () => {
+export const ToDoListTextModal = () => {
 
-    const [textModal, setTextModal] = useAtom(textModalAtom);
+    const [textModal, setTextModal] = useAtom(toDoListTextModalAtom);
 
     return (
         <MODAL>

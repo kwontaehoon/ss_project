@@ -43,7 +43,7 @@ export const lookListEditModalAtom = atom<LookList>({
     lookList: []
 })
 
-export const textModalAtom = atom<LookList>({
+export const toDoListTextModalAtom = atom<LookList>({
     open: false,
     content: '',
     buttonContent: '',

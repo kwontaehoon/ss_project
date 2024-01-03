@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { TH } from './styles'
 import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
@@ -13,7 +13,28 @@ const Index = () => {
     password: ""
   });
 
-  const { mutate: login, data } = useLoginMutation();
+  const { mutate: login, data, isSuccess } = useLoginMutation();
+  console.log("is: ", isSuccess, data?.data?.status);
+  const [notFind, setNotFind] = useState({
+    open: false,
+    content: ""
+  });
+
+
+  useEffect(() => {
+    if(data?.data?.status == "success"){
+      setNotFind({open: false, content: ""});
+      navigation("/to_do_list");
+    }else if(isSuccess){
+      if(loginInfo.userId == ""){
+        setNotFind({open: true, content: "아이디를 입력해 주세요."})
+      }else if(loginInfo.password == ""){
+        setNotFind({open: true, content: "비밀번호를 입력해 주세요."})
+      }else{
+        setNotFind({open: true, content: "입력하신 내용을 다시 확인해 주세요."})
+      }
+    }
+  }, [data]);
 
   const pageNavi = (e: string) => {
     if (e == 'signup') {
@@ -33,10 +54,18 @@ const Index = () => {
           <div className='mr-2'>Toy Project</div>
           <div className='text-xs pt-2'>with TS</div>
         </div>
+
         <div className='flex flex-col'>
-          <TextField id="outlined-basic" label="id" variant="outlined" margin='normal' onChange={(e)=>setLoginInfo({...loginInfo, userId: e.target.value})} />
-          <TextField id="outlined-basic" label="password" variant="outlined" onChange={(e)=>setLoginInfo({...loginInfo, password: e.target.value})} />
+          <TextField id="outlined-basic" label="id" variant="outlined" margin='normal' 
+              onChange={(e)=>setLoginInfo({...loginInfo, userId: e.target.value})} 
+              onFocus={()=>setNotFind({open: false, content: ""})}/>
+          <TextField id="outlined-basic" label="password" variant="outlined" 
+              onChange={(e)=>setLoginInfo({...loginInfo, password: e.target.value})} 
+              onFocus={()=>setNotFind({open: false, content: ""})}/>
+          {notFind.open && <div className='mt-3 text-red-500'>{notFind.content}</div>}
+
           <button onClick={()=>login(loginInfo)}>로그인</button>
+
           <div className='flex'>
             <div className='flex-1'>
               <span className='cursor-pointer' onClick={()=>pageNavi("signup")}>회원가입</span>

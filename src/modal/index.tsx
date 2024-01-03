@@ -1,21 +1,24 @@
 import React from 'react'
-import { listCRUDModalAtom, lookListEditModalAtom, textModalAtom } from '../store/todoList'
+import { listCRUDModalAtom, lookListEditModalAtom, toDoListTextModalAtom } from '../store/todoList'
 import { useAtom } from 'jotai'
 import { ListCRUDModal } from './todoList/ListCRUDModal'
 import { LookListModal } from './todoList/LookListEdit'
-import { TextModal } from './todoList/TextModal'
+import { ToDoListTextModal } from './todoList/TextModal'
+import { LoginTextModal } from './account/TextModal'
 
 const Index = () => {
 
   const [listCRUDModal, setListCRUDModal] = useAtom(listCRUDModalAtom);
   const [lookListEditModal, setLookListEditModal] = useAtom(lookListEditModalAtom);
-  const [textModal, setTextModal] = useAtom(textModalAtom);
+  const [toDoListTextModal, setToDoListTextModal] = useAtom(toDoListTextModalAtom);
+  const [loginTextModal, setLoginTextModal] = useAtom(toDoListTextModalAtom);
 
   return (
     <>
         {listCRUDModal.open && <ListCRUDModal /> }
         {lookListEditModal.open && <LookListModal/>}
-        {textModal.open && <TextModal />}
+        {toDoListTextModal.open && <ToDoListTextModal />}
+        {loginTextModal.open && <LoginTextModal />}
 
 
     </>

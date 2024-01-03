@@ -10,7 +10,6 @@ export const TH = {
     Container: styled.div`
         height: 100%;
         padding: 20px;
-        border: 1px solid blue;
     `,
     Header: styled.div`
         height: 10%;

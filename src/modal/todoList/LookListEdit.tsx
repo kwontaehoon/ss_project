@@ -3,14 +3,14 @@ import { MODAL, MODALSUB } from '../../layouts/modal'
 import { FaTh, FaPen, FaRegTrashAlt, FaClone, FaChevronRight } from 'react-icons/fa';
 import { lookListEditText } from '../../constants/Text/ToDoList';
 import { useAtom } from 'jotai';
-import { lookListEditModalAtom, textModalAtom } from '../../store/todoList';
+import { lookListEditModalAtom, toDoListTextModalAtom } from '../../store/todoList';
 import { lookListDelete } from '../../function/localStorage/LookList';
 
 export const LookListModal = () => {
 
     const [lookListEditModal, setLookListEdit] = useAtom(lookListEditModalAtom);
     const [lookListEditAct, setLookListEditAct] = useState<Boolean[]>(Array(3).fill(false));
-    const [textModal, setTextModal] = useAtom(textModalAtom);
+    const [textModal, setTextModal] = useAtom(toDoListTextModalAtom);
 
     const func = (index: number) => {
         if (index == 3) {
