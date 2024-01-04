@@ -13,12 +13,11 @@ export const TH = {
         flex-direction: column;
     `,
     Header: styled(center)`
-
     `,
     Main: styled.div`
         width: 300px;
         align-items: center;
-        font-size: 12px;
+        font-size: 12px;;
 
         button {
             margin: 20px 0px;

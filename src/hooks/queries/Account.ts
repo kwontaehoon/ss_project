@@ -1,5 +1,5 @@
 import { useQuery, useMutation } from "react-query";
-import { getIdCheck, postSignup, postLogin } from "../../service/Account";
+import { getIdCheck, postSignup, postLogin, postIdSearch, postPwdSearch } from "../../service/Account";
 
 const ACCOUNT_KEYS = {
 
@@ -45,5 +45,31 @@ export const useLoginMutation = () =>
     },
     onSuccess: () => {
       // 성공 시 실행할 로직 추가
+    }
+  });
+
+/**
+ * 아이디 찾기
+ * 
+ */
+export const useIdSearchMutation = () =>
+  useMutation({
+    mutationFn: (params: Object) => {
+      return postIdSearch(params);
+    },
+    onSuccess: () => {
+    }
+  });
+
+/**
+ * 비밀번호 찾기
+ * 
+ */
+export const usePwdSearchMutation = () =>
+  useMutation({
+    mutationFn: (params: Object) => {
+      return postPwdSearch(params);
+    },
+    onSuccess: () => {
     }
   });

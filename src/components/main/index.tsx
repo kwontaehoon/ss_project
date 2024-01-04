@@ -14,7 +14,6 @@ const Index = () => {
   });
 
   const { mutate: login, data, isSuccess } = useLoginMutation();
-  console.log("is: ", isSuccess, data?.data?.status);
   const [notFind, setNotFind] = useState({
     open: false,
     content: ""
@@ -70,7 +69,10 @@ const Index = () => {
             <div className='flex-1'>
               <span className='cursor-pointer' onClick={()=>pageNavi("signup")}>회원가입</span>
             </div>
-            <div className='cursor-pointer'>아이디 비밀번호 찾기</div>
+            <div className='flex'>
+              <div className='mr-2 cursor-pointer' onClick={()=>navigation("/idSearch")}>아이디 찾기</div>
+              <div className='cursor-pointer' onClick={()=>navigation("/pwdSearch")}>비밀번호 찾기</div>
+            </div>
           </div>
         </div>
       </TH.Main>
