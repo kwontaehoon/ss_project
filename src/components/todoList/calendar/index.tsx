@@ -5,8 +5,9 @@ import { week } from '../../../constants/Text/ToDoList';
 import { CalendarProps } from './type'
 import { useNavigate } from 'react-router-dom';
 
-const Index: React.FC<CalendarProps> = ({ list, setList }) => {
+const Index: React.FC<CalendarProps> = ({ list }) => {
 
+  console.log("calendar 실행");
   const navigate = useNavigate();
   const [current, setCurrent] = useState(new Date());
   const [calendarList, setCalendarList] = useState([]);

@@ -1,5 +1,5 @@
 import { useQuery, useMutation } from "react-query";
-import { getIdCheck, postSignup, postLogin, postIdSearch, postPwdSearch } from "../../service/Account";
+import { postIdCheck, postSignup, postLogin, postIdSearch, postPwdSearch } from "../../service/Account";
 
 const ACCOUNT_KEYS = {
 
@@ -15,7 +15,6 @@ const ACCOUNT_KEYS = {
 export const useSignupMutation = () =>
   useMutation({
     mutationFn: (params: Object) => {
-      console.log("params: ", params);
       return postSignup(params);
     },
     onSuccess: () => {
@@ -29,7 +28,7 @@ export const useSignupMutation = () =>
  */
 export const useIdCheckQuery = (params: Object) => {
   return useQuery(ACCOUNT_KEYS.idCheck, async () => {
-    const { data } = await getIdCheck(params);
+    const { data } = await postIdCheck(params);
     return data;
   });
 }

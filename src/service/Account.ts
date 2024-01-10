@@ -28,7 +28,7 @@ export const postSignup = (params:Object) => client.post(ACCOUNT_URL.signup, par
  * 중복 아이디 찾기
  * 
  */
-export const getIdCheck = (params:Object) => client.get(ACCOUNT_URL.idCheck, { params: params });
+export const postIdCheck = (params:Object) => client.post(ACCOUNT_URL.idCheck, params);
 
 /**
  * 로그인

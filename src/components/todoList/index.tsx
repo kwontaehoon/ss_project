@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import List from './list/index'
 import Board from './board'
 import Calenar from './calendar'
 import { TH } from './styles'
-import { FaAlignJustify, FaPlus, FaList, FaCalendarAlt, FaRegClipboard } from 'react-icons/fa'
+import { FaAlignJustify, FaPlus } from 'react-icons/fa'
 import { LookBox } from './lookBox'
 import { useAtom } from 'jotai'
 import { listAtom, lookListEditModalAtom } from '../../store/todoList'
@@ -11,6 +11,7 @@ import { InputBox } from '../../function/input'
 import { ListCreate } from '../../function/localStorage/List'
 import { filterText, today } from '../../constants/Text/ToDoList'
 import { FilterDisplay, LookList } from './type'
+import { useListQuery, useWriteMutation } from '../../hooks/queries/ToDoList'
 
 const Index = () => {
 
@@ -21,15 +22,17 @@ const Index = () => {
         lookBox: false,
     });
 
-    const [list, setList] = useAtom(listAtom);
-    const [content, setContent] = useState<string>(); // add 내용
+    const { data: list, refetch } = useListQuery(); // 리스트
+    const { mutate: write, isSuccess } = useWriteMutation(); // 글 작성
+    const [content, setContent] = useState<string>(); // add 내용 onchange
     const [lookList, setLookList] = useState<LookList[]>();
     const [lookListBb, setLookListBb] = useState<Boolean[]>([true, ...Array(lookList?.length).fill(false)]);
     const [lookListEditModal, setLookListEditModal] = useAtom(lookListEditModalAtom);
 
     useEffect(() => {
         setLookList(JSON.parse(localStorage.getItem('lookList')));
-    }, []);
+        refetch();
+    }, [isSuccess]);
 
     return (
         <TH.Container>
@@ -42,7 +45,7 @@ const Index = () => {
                 <div className='flex items-center justify-center'>
                     <InputBox width={"100%"} height={40} mh={20} setContent={setContent} />
                     <div className='ml-5 border p-2 rounded-full cursor-pointer bg-lime-200'>
-                        <FaPlus onClick={() => ListCreate(content, setList)} />
+                        <FaPlus onClick={() => write({title: content})} />
                     </div>
                 </div>
 
@@ -82,8 +85,8 @@ const Index = () => {
                     })}
                 </div>
 
-                {lookList && lookList[lookListBb.findIndex(x => x)].title == '리스트' && <List list={list} setList={setList} />}
-                {lookList && lookList[lookListBb.findIndex(x => x)].title == '캘린더' && <Calenar list={list} setList={setList} />}
+                {lookList && lookList[lookListBb.findIndex(x => x)].title == '리스트' && <List list={list} refetch={refetch} />}
+                {lookList && lookList[lookListBb.findIndex(x => x)].title == '캘린더' && <Calenar list={list} />}
             </TH.Main>
             <TH.Footer>
                 footer

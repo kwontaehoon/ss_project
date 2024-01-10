@@ -6,15 +6,13 @@ import { useAtom } from 'jotai';
 import { listCRUDModalAtom } from '../../../store/todoList';
 import { listProps } from './type';
 import { useNavigate } from 'react-router-dom';
+import { useDeleteMutation } from '../../../hooks/queries/ToDoList';
 
-const Index:React.FC<listProps> = ({list, setList}) => {
+const Index:React.FC<listProps> = ({list, refetch}) => {
 
   const navigate = useNavigate();
   const [listCRUDModal, setListCRUDModal] = useAtom(listCRUDModalAtom);
-
-  useEffect(() => {
-    setList(JSON.parse(localStorage.getItem('list')));
-  }, []);
+  const { mutateAsync: listDelete } = useDeleteMutation();
 
   return (
     <div className='py-2 flex-1 text-sm'>
@@ -25,9 +23,15 @@ const Index:React.FC<listProps> = ({list, setList}) => {
             <div onClick={()=>navigate(`/to_do_list/${index}`)}>{x.title}</div>
             <div className='flex justify-end flex-1'>
               <FaPencil className='rounded-sm mr-4 cursor-pointer'
-                onClick={() => setListCRUDModal({ open: true, index: index, type: "update", listData: x, buttonText: "수정하기", nextFunc: setList })} />
+                onClick={() => setListCRUDModal({ open: true, index: index, type: "update", listData: x, buttonText: "수정하기" })} />
               <FaTrash className='rounded-sm cursor-pointer'
-                onClick={() => setListCRUDModal({ open: true, type: "delete", listData: x, mainText: "정말로 삭제하시겠습니까?", buttonText: "삭제하기", nextFunc: () => ListDelete(index, setList) })} />
+                onClick={() => 
+                  setListCRUDModal({ 
+                    open: true, 
+                    type: "delete", 
+                    listData: x, mainText: "정말로 삭제하시겠습니까?", 
+                    buttonText: "삭제하기",
+                    nextFunc: async() => { await listDelete({id: x.id}); refetch(); }})} />
             </div>
           </div>
         )
