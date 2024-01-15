@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
 import { MODAL, MODALSUB } from '../../layouts/modal'
 import { useAtom } from 'jotai'
 import { listCRUDModalAtom } from '../../store/todoList'
 import { InputBox } from '../../function/input'
-import { ListUpdate } from '../../function/localStorage/List'
+import { useModifyMutation } from '../../hooks/queries/ToDoList'
 
 export const ListCRUDModal = () => {
 
   const [listCRUDModal, setListCRUDModal] = useAtom(listCRUDModalAtom);
 
   const [content, setContent] = useState<string | number>(listCRUDModal.listData.title);
+  const { mutateAsync: listModify } = useModifyMutation();
 
   return (
     <MODAL>
@@ -22,12 +22,11 @@ export const ListCRUDModal = () => {
           <div className='flex-1 border flex items-center justify-center mr-1 rounded cursor-pointer'
             onClick={() => setListCRUDModal({ ...listCRUDModal, open: false })}>닫기</div>
           <div className='flex-1 border flex items-center justify-center ml-1 rounded cursor-pointer bg-lime-200'
-            onClick={() => {
+            onClick={async() => {
               if(listCRUDModal.type == "update"){
-                ListUpdate(listCRUDModal.index, listCRUDModal.nextFunc, content);
-              }else{
-                listCRUDModal.nextFunc();
+                await listModify({id: listCRUDModal.listData.id, title: content});
               }
+              listCRUDModal.nextFunc();
               setListCRUDModal({ ...listCRUDModal, open: false });
             }
             }>{listCRUDModal.buttonText}

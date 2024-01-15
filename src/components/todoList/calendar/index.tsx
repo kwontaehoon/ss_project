@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { addMonths, subMonths } from 'date-fns'
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { week } from '../../../constants/Text/ToDoList';
-import { CalendarProps } from './type'
+import { ListProps } from './type'
 import { useNavigate } from 'react-router-dom';
 
-const Index: React.FC<CalendarProps> = ({ list }) => {
+const Index: React.FC<ListProps> = ({ list }) => {
 
   console.log("calendar 실행");
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const Index: React.FC<CalendarProps> = ({ list }) => {
   };
 
   useEffect(() => {
-    setCalendarList(list.filter(x => new Date(x.date).getFullYear() == current.getFullYear() && new Date(x.date).getMonth() == current.getMonth()));
+    setCalendarList(list.data.filter(x => new Date(x.date).getFullYear() == current.getFullYear() && new Date(x.date).getMonth() == current.getMonth()));
   }, [list, current]);
 
   const [selectedYear, setSelectedYear] = useState(today.year); // 현재 선택된 연도
@@ -70,13 +70,13 @@ const Index: React.FC<CalendarProps> = ({ list }) => {
           let next = curr - dateTotalCount;
 
           return (
-            <div className='py-2' style={{ width: '14.28%' }}>
+            <div key={index} className='py-2' style={{ width: '14.28%' }}>
               <div key={index} className='bg-lime-200 h-4 mx-1 rounded-br-xl rounded-tl-xl pl-2'>{curMonthStartDate > index ? prev : dateTotalCount < curr ? next : curr}</div>
               <div className='bg-white m-1 p-1 h-20 rounded-tr-xl rounded-bl-xl'>
                 {calendarList.map(y => {
                   if (index == new Date(y.date).getDate() + curMonthStartDate - 1)
                     return (
-                      <div className='truncate' onClick={()=>navigate(`${y.id}`)}>{y.title}</div>
+                      <div key={y.id} className='truncate' onClick={()=>navigate(`${y.id}`)}>{y.title}</div>
                     )
                 })}
               </div>

@@ -43,9 +43,6 @@ export const useDeleteMutation = () =>
     mutationFn: (params: object) => {
       return postDelete(params);
     },
-    onSuccess: () => {
-      // 성공 시 실행할 로직 추가
-    }
   });
 
   /**
@@ -57,7 +54,4 @@ useMutation({
   mutationFn: (params: object) => {
     return postModify(params);
   },
-  onSuccess: () => {
-    // 성공 시 실행할 로직 추가
-  }
 });

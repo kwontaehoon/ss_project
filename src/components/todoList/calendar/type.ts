@@ -1,9 +1,14 @@
-export interface ListType {
+type ListType = {
+  state: string;
+  message: string;
+  data: [{
     id: number;
-    title: number | string;
+    title: string;
+    userId: string;
     date: Date;
-  }
-  
-export interface CalendarProps {
-    list: ListType[]; // Test 인터페이스를 활용하여 list 배열의 타입을 정의
-  }
+  }];
+}
+
+export interface ListProps {
+  list: ListType;
+}

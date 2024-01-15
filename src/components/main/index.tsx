@@ -3,6 +3,7 @@ import { TH } from './styles'
 import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import { useLoginMutation } from '../../hooks/queries/Account';
+import { client } from '../../service';
 
 const Index = () => {
 
@@ -19,10 +20,15 @@ const Index = () => {
     content: ""
   });
 
+  useEffect(()=>{
+    window.localStorage.removeItem("auth");
+  }, []);
+
 
   useEffect(() => {
     if(data?.data?.status == "success"){
       setNotFind({open: false, content: ""});
+      window.localStorage.setItem("auth", JSON.stringify(data.data.accessToken));
       navigation("/to_do_list");
     }else if(isSuccess){
       if(loginInfo.userId == ""){
@@ -58,7 +64,7 @@ const Index = () => {
           <TextField id="outlined-basic" label="id" variant="outlined" margin='normal' 
               onChange={(e)=>setLoginInfo({...loginInfo, userId: e.target.value})} 
               onFocus={()=>setNotFind({open: false, content: ""})}/>
-          <TextField id="outlined-basic" label="password" variant="outlined" 
+          <TextField id="outlined-basic" label="password" variant="outlined" type='password'
               onChange={(e)=>setLoginInfo({...loginInfo, password: e.target.value})} 
               onFocus={()=>setNotFind({open: false, content: ""})}/>
           {notFind.open && <div className='mt-3 text-red-500'>{notFind.content}</div>}
