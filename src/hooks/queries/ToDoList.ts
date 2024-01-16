@@ -1,5 +1,5 @@
 import { useQuery, useMutation } from "react-query";
-import { getList, postWrite, postDelete, postModify } from "../../service/ToDoList";
+import { getList, postWrite, postDelete, postModify, postFinish } from "../../service/ToDoList";
 
 const ACCOUNT_KEYS = {
 
@@ -16,7 +16,7 @@ export const useListQuery = () => {
     const { data } = await getList();
     return data;
   }, {
-
+    staleTime: Infinity,
   });
 }
 
@@ -55,3 +55,14 @@ useMutation({
     return postModify(params);
   },
 });
+
+ /**
+ * 글 완료
+ * 
+ */
+ export const useFinishMutation = () =>
+ useMutation({
+   mutationFn: (params: object) => {
+     return postFinish(params);
+   },
+ });

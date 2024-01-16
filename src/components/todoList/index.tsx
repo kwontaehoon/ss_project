@@ -23,7 +23,6 @@ const Index = () => {
     });
 
     const { data: list, refetch } = useListQuery(); // 리스트
-    console.log("list: ", list);
     const { mutate: write, isSuccess } = useWriteMutation(); // 글 작성
     const [content, setContent] = useState<string>(); // add 내용 onchange
     const [lookList, setLookList] = useState<LookList[]>();

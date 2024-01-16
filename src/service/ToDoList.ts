@@ -13,6 +13,9 @@ const ACCOUNT_URL = {
     
     // 글 수정
     modify: "/modify",
+
+    // 글 완료
+    finish: "/finish",
 }
 
 /**
@@ -38,3 +41,9 @@ export const postDelete = (params:object) => client.post(ACCOUNT_URL.delete, par
  * 
  */
 export const postModify = (params:object) => client.post(ACCOUNT_URL.modify, params);
+
+/**
+ * 글 수정
+ * 
+ */
+export const postFinish = (params:object) => client.post(ACCOUNT_URL.finish, params);

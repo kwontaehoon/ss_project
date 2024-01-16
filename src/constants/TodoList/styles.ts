@@ -19,7 +19,7 @@ export const TH = {
      `,
     Main: styled.div`
         height: 90%;
-        margin-top: 10px;
+        margin-top: 20px;
         font-size: 20px;
         overflow-y: scroll;
             &::-webkit-scrollbar {

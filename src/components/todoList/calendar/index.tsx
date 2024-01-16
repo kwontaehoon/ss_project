@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 
 const Index: React.FC<ListProps> = ({ list }) => {
 
-  console.log("calendar 실행");
   const navigate = useNavigate();
   const [current, setCurrent] = useState(new Date());
   const [calendarList, setCalendarList] = useState([]);
@@ -76,7 +75,7 @@ const Index: React.FC<ListProps> = ({ list }) => {
                 {calendarList.map(y => {
                   if (index == new Date(y.date).getDate() + curMonthStartDate - 1)
                     return (
-                      <div key={y.id} className='truncate' onClick={()=>navigate(`${y.id}`)}>{y.title}</div>
+                      <div key={y.id} className='truncate' onClick={()=>navigate(`${y.id}`, {state: y})}>{y.title}</div>
                     )
                 })}
               </div>
